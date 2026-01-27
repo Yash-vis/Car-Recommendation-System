@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+*.DS_Store
+chromedriver.exe
+data_files/*.csv
+models/*.joblib
