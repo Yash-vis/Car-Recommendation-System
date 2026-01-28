@@ -3,12 +3,10 @@ import pandas as pd
 import joblib
 from sklearn.metrics.pairwise import cosine_similarity
 
-# -------------------- CONFIG --------------------
 st.set_page_config(page_title="Car Recommendation System", layout="wide")
 
 PLACEHOLDER_IMAGE = "https://via.placeholder.com/300x200?text=No+Image"
 
-# -------------------- LOAD DATA --------------------
 @st.cache_data(show_spinner="Loading data...")
 def load_all():
     df = pd.read_csv("data_files/cars_prepared.csv")
@@ -18,7 +16,6 @@ def load_all():
 
 df, vectorizer, tfidf_matrix = load_all()
 
-# -------------------- HELPERS --------------------
 def safe_image(img_url, width=200):
     """Safely display image or fallback"""
     if isinstance(img_url, str) and img_url.startswith("http"):
@@ -32,14 +29,12 @@ def recommend(query, top_n=5):
     top_idx = sims.argsort()[::-1][:top_n]
     return df.iloc[top_idx]
 
-# -------------------- SESSION STATE --------------------
 if "details_view" not in st.session_state:
     st.session_state.details_view = False
 
 if "selected_index" not in st.session_state:
     st.session_state.selected_index = None
 
-# -------------------- DETAILS PAGE --------------------
 def show_details(idx):
     car = df.iloc[idx]
 
@@ -60,12 +55,10 @@ def show_details(idx):
         st.session_state.details_view = False
         st.rerun()
 
-# -------------------- ROUTING --------------------
 if st.session_state.details_view:
     show_details(st.session_state.selected_index)
     st.stop()
 
-# -------------------- MAIN UI --------------------
 st.title("🚗 Car Recommendation System")
 
 query = st.text_input(
